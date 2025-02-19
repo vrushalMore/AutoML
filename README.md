@@ -19,7 +19,7 @@ The AutoML Framework is a Python-based tool designed to automate the machine lea
 
 1. Usage:
 ```bash
- from neptune.automl import AutoML 
+ from module.automl import AutoML 
  AutoML('dataset_path','target_feature','type_of_problem')
  ```
 
