@@ -106,8 +106,4 @@ def clean(dataset):
     print(f"{'null values':<15}{null_value:>15}\n")
     print(f"{'removed rows':<15}{removed_info['removed_rows']:>15}")
     print(f"{'removed columns':<15}{removed_info['removed_columns']:>15}\n")
-    
-    end_time = time.time()
-    run_time = end_time - start_time
-    print(f"{'run time':<15}{f'{run_time:.4f} seconds':>15}\n\n")
     return dataset

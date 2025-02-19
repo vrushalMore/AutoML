@@ -1,5 +1,4 @@
 import numpy as np
-import pickle
 import warnings
 import time
 from sklearn.model_selection import train_test_split
@@ -12,6 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
 from xgboost import XGBRegressor, XGBClassifier
+from sklearn.metrics import accuracy_score
 
 def _regression_evaluation(x, y):
     warnings.filterwarnings("ignore")
@@ -60,15 +60,8 @@ def _regression_evaluation(x, y):
             best_model = model
             best_name = name
             best_metrics = metrics
-
-    end_time = time.time()
-    run_time = end_time - start_time
-
-    print(f"Best Model: {best_name}")
-    print("Evaluation Metrics:")
     for metric, value in best_metrics.items():
         print(f"{metric: <15}: {value:.8f}")
-    print(f"Run Time: {run_time:.4f} seconds\n")
 
 
 
@@ -100,19 +93,17 @@ def _binaryclass_evaluation(x, y):
         f1 = f1_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred)
         recall = recall_score(y_test, y_pred)
+        accuracy = accuracy_score(y_test, y_pred)
 
-        if f1 > best_f1_score and f1 != 1.00 and precision != 1.00 and recall != 1.00:
+        if f1 > best_f1_score and f1 != 1.00 and precision != 1.00 and recall != 1.00 and  accuracy != 1.00:
             best_f1_score = f1
             best_model = model_name
-            best_metrics = {'F1 Score': f1, 'Precision': precision, 'Recall': recall}
+            best_metrics = {'Accuracy':accuracy,'F1 Score': f1, 'Precision': precision, 'Recall': recall}
 
-    end_time = time.time()
-    run_time = end_time - start_time
     print(f"Best Model: {best_model}")
     print("Evaluation Metrics:")
     for metric, value in best_metrics.items():
         print(f"{metric: <15}: {value:.8f}")
-    print(f"Run Time: {run_time:.4f} seconds\n")
 
 
 def _multiclass_evaluation(x, y):
@@ -143,19 +134,17 @@ def _multiclass_evaluation(x, y):
         f1 = f1_score(y_test, y_pred, average='weighted')
         precision = precision_score(y_test, y_pred, average='weighted')
         recall = recall_score(y_test, y_pred, average='weighted')
+        accuracy = accuracy_score(y_test, y_pred)
 
-        if f1 > best_f1_score and f1 != 1.00 and precision != 1.00 and recall != 1.00:
+        if f1 > best_f1_score and f1 != 1.00 and precision != 1.00 and recall != 1.00 and  accuracy != 1.00:
             best_f1_score = f1
             best_model = model_name
-            best_metrics = {'F1 Score': f1, 'Precision': precision, 'Recall': recall}
+            best_metrics = {'Accuracy':accuracy,'F1 Score': f1, 'Precision': precision, 'Recall': recall}
 
-    end_time = time.time()
-    run_time = end_time - start_time
     print(f"Best Model: {best_model}")
     print("Evaluation Metrics:")
     for metric, value in best_metrics.items():
         print(f"{metric: <15}: {value:.8f}")
-    print(f"Run Time: {run_time:.4f} seconds\n")
 
 
 def evaluation(x, y, problem_type):
